@@ -1,192 +1,192 @@
 const langsAndCountries = {
   am: {
-    full: 'aramaic',
+    full: 'Aramaic',
     country: 'sy',
     countries: ['sy'],
     greek_langs: []
   },
   ar: {
-    full: 'arabic',
+    full: 'Arabic',
     country: 'sa',
     countries: ['sa'],
     greek_langs: ['hi']
   },
   cs: {
-    full: 'czech',
+    full: 'Czech',
     country: 'cz',
     countries: ['cz'],
     greek_langs: ['es']
   },
   el: {
-    full: 'greek',
+    full: 'Greek',
     country: 'gr',
     countries: ['gr'],
     greek_langs: ['ar', 'zh']
   },
   en: {
-    full: 'english',
+    full: 'English',
     country: 'gb',
     countries: ['gb'],
     greek_langs: ['el']
   },
   es: {
-    full: 'spanish',
+    full: 'Spanish',
     country: 'es',
     countries: ['es'],
     greek_langs: ['el', 'zh']
   },
   fa: {
-    full: 'persian',
+    full: 'Persian',
     country: 'ir',
     countries: ['ir'],
     greek_langs: ['el', 'ja']
   },
   fi: {
-    full: 'finnish',
+    full: 'Finnish',
     country: 'fi',
     countries: ['fi'],
     greek_langs: ['he']
   },
   fr: {
-    full: 'french',
+    full: 'French',
     country: 'fr',
     countries: ['fr'],
     greek_langs: ['he', 'jv', 'zh']
   },
   gl: {
-    full: 'heavenly script',
+    full: 'Heavenly Script',
     country: 'uv',
     countries: ['uv'],
     greek_langs: []
   },
   he: {
-    full: 'hebrew',
+    full: 'Hebrew',
     country: 'il',
     countries: ['il'],
     greek_langs: ['zh']
   },
   hi: {
-    full: 'hindi',
+    full: 'Hindi',
     country: 'in',
     countries: ['in'],
     greek_langs: []
   },
   hr: {
-    full: 'croatian',
+    full: 'Croatian',
     country: 'hr',
     countries: ['hr'],
     greek_langs: ['es']
   },
   hu: {
-    full: 'hungarian',
+    full: 'Hungarian',
     country: 'hu',
     countries: ['hu'],
     greek_langs: ['zh']
   },
   it: {
-    full: 'italian',
+    full: 'Italian',
     country: 'it',
     countries: ['it'],
     greek_langs: ['am', 'ar']
   },
   ja: {
-    full: 'japanese',
+    full: 'Japanese',
     country: 'jp',
     countries: ['jp'],
     greek_langs: []
   },
   jv: {
-    full: 'javanese',
+    full: 'Javanese',
     country: 'id',
     countries: ['id'],
     greek_langs: []
   },
   lv: {
-    full: 'latvian',
+    full: 'Latvian',
     country: 'lv',
     countries: ['lv'],
     greek_langs: ['zh']
   },
   lt: {
-    full: 'lithuanian',
+    full: 'Lithuanian',
     country: 'lt',
     countries: ['lt'],
     greek_langs: ['zh']
   },
   mk: {
-    full: 'macedonian',
+    full: 'Macedonian',
     country: 'mk',
     countries: [],
     greek_langs: ['es']
   },
   nl: {
-    full: 'dutch',
+    full: 'Dutch',
     country: 'nl',
     countries: ['nl'],
     greek_langs: ['zh']
   },
   no: {
-    full: 'norwegian',
+    full: 'Norwegian',
     country: 'no',
     countries: ['no'],
     greek_langs: ['el']
   },
   pl: {
-    full: 'polish',
+    full: 'Polish',
     country: 'pl',
     countries: ['pl'],
     greek_langs: ['zh']
   },
   pt: {
-    full: 'portuguese',
+    full: 'Portuguese',
     country: 'pt',
     countries: ['pt'],
     greek_langs: ['el', 'zh']
   },
   ro: {
-    full: 'romanian',
+    full: 'Romanian',
     country: 'ro',
     countries: ['ro'],
     greek_langs: ['tr']
   },
   ru: {
-    full: 'russian',
+    full: 'Russian',
     country: 'ru',
     countries: ['ru'],
     greek_langs: ['zh']
   },
   si: {
-    full: 'sinhala',
+    full: 'Sinhala',
     country: 'lk',
     countries: ['lk'],
     greek_langs: ['te']
   },
   sv: {
-    full: 'swedish',
+    full: 'Swedish',
     country: 'se',
     countries: ['se'],
     greek_langs: ['el']
   },
   te: {
-    full: 'telugu',
+    full: 'Telugu',
     country: 'in',
     countries: ['in'],
     greek_langs: []
   },
   tr: {
-    full: 'turkish',
+    full: 'Turkish',
     country: 'tr',
     countries: ['tr'],
     greek_langs: ['fr']
   },
   yi: {
-    full: 'yiddish',
+    full: 'Yiddish',
     country: 'il',
     countries: ['il'],
     greek_langs: ['am']
   },
   zh: {
-    full: 'chinese',
+    full: 'Chinese',
     country: 'cn',
     countries: ['cn'],
     greek_langs: ['gl']
@@ -229,21 +229,28 @@ const contryCoords = {
 var coordPairs = {};
 for(var lang in langsAndCountries) {
   var config = langsAndCountries[lang];
-  var fromCountry = contryCoords[config.country];
-  if(!fromCountry) {
-    continue;
-  }
-  config.greek_langs.forEach(function(gl) {
-    var key = lang + '-' + gl;
-    var toConfig = langsAndCountries[gl];
-    if(toConfig) {
-      var toCountry = contryCoords[toConfig.country];
-      if(toCountry) {
-        coordPairs[key] = {
-          from: fromCountry,
-          to: toCountry
+  config.countries.forEach(function(fromCountry) {
+    var fromCoords = contryCoords[config.country];
+    if(!fromCoords) {
+      return;
+    }
+    config.greek_langs.forEach(function(gl) {
+      var toConfig = langsAndCountries[gl];
+      if(toConfig) {
+        var toCountry = toConfig.country;
+        var toCoords = contryCoords[toCountry];
+        if(toCoords) {
+          if(!coordPairs[toCountry]) {
+            coordPairs[toCountry] = {};
+          }
+          coordPairs[toCountry][fromCountry] = {
+            fromLang: lang,
+            toLang: gl,
+            from: fromCoords,
+            to: toCoords
+          }
         }
       }
-    }
-  })
+    });
+  });
 }
