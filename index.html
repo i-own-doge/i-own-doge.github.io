@@ -4,16 +4,23 @@
     <meta charset=utf-8 />
     <title>It's all Greek to me Map</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.css" rel="stylesheet" />
     <style>
       body { margin:0; padding:0; }
       #map { position:absolute; top:0; bottom:0; width:100%; }
+      #note { position:absolute; top:0; margin: auto 20px; z-index: 100000; width: 200px; height: 100px; color: rgb(200, 0, 0);}
     </style>
   </head>
   <body>
     <script src='https://api.mapbox.com/mapbox.js/plugins/arc.js/v0.1.0/arc.js'></script>
     <div id='map'></div>
+    <div id='note'>
+      <h4> It's All Greek To Me!</h4>
+      <p>Mouse over and click a line to see the connection between two languages</p>
+      <p>Mouse over and click a circle to see a summary</p>
+      <a href="https://omniglot.com/language/idioms/incomprehensible.php">Data Source</a>
+    </div>
     <script src='data.js'></script>
     <script src='map.js'></script>
   </body>
